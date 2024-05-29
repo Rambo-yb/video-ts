@@ -200,6 +200,17 @@ void* MediaProc(__attribute__((unused))void* arg) {
                             break;
                         }
                     }
+                } else if (strcmp(buff, "udp connect close") == 0) {
+                    for (int i = 0; i < MAX_CLIENT_NUM; i++)
+                    {
+                        if (client_arr[i].used 
+                            && client_arr[i].client_addr.sin_addr.s_addr == cli_addr.sin_addr.s_addr 
+                            && client_arr[i].client_addr.sin_port == cli_addr.sin_port) {
+                            printf("a connection exit, ip=%s, port=%d\n", inet_ntoa(client_arr[i].client_addr.sin_addr), ntohs(client_arr[i].client_addr.sin_port));
+                            memset(&client_arr[i], 0, sizeof(MediaClientInfo));
+                            break;
+                        }
+                    }
                 }
             }
 		}
